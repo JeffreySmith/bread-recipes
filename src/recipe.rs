@@ -22,20 +22,17 @@ pub struct Recipe {
 
 impl Recipe {
     pub fn import(&mut self,filename:String) -> Result<()> {
+        let contents:String=fs::read_to_string(filename).expect(
+            "Expected file input");
+        let recipe:Recipe = serde_json::from_str(&contents)?;
         
-        if check_is_json(&filename)  {
-            let contents:String=fs::read_to_string(filename).expect(
-                "Expected file input");
-            let recipe:Recipe = serde_json::from_str(&contents)?;
-            
-            self.flour = recipe.flour;
-            self.hydration= recipe.hydration;
-            self.starter=recipe.starter;
-            self.salt=recipe.salt;
-            self.oil = recipe.oil;
-            self.name = recipe.name;
-            self.yeast=recipe.yeast;
-        }
+        self.flour = recipe.flour;
+        self.hydration= recipe.hydration;
+        self.starter=recipe.starter;
+        self.salt=recipe.salt;
+        self.oil = recipe.oil;
+        self.name = recipe.name;
+        self.yeast=recipe.yeast;
         Ok(())
     }
     pub fn water(&self) -> f32 {
