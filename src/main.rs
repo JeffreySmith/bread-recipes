@@ -9,7 +9,9 @@ use crate::recipe::*;
 
 
 fn main() {
-    println!("Hello, world!");
-    let mut recipe = Recipe::default();
-    recipe.import("recipes/focaccia.json".to_string()).unwrap();
+    let mut recipes:Vec<Recipe> = vec![];
+    import_all_recipes("recipes/".to_string(),&mut recipes);
+    for r in recipes {
+        println!("{:?} has {}g of water",r,r.water());
+    }
 }
