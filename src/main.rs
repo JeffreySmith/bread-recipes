@@ -7,12 +7,15 @@ use bracket_lib::prelude::*;
 
 struct State {
     recipes:Vec<Recipe>,
-
+    index:i32,
 }
 impl State {
     fn new() -> Self {
+        let mut recipes:Vec<Recipe> = vec![];
+        import_all_recipes("recipes/".to_string(),&mut recipes);
         State {
-            recipes:vec![],
+            recipes,
+            index:0,
         }
     }
 }
@@ -20,7 +23,7 @@ impl GameState for State {
     fn tick(&mut self, ctx:&mut BTerm) {
     
         ctx.cls();
-        ctx.print(1,1,"Hello!");
+        ctx.print_centered(5,&format!("Hello! Flour is {}",self.recipes[0].flour));
     }
 }
 
