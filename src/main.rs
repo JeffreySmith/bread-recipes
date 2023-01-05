@@ -1,12 +1,15 @@
 #![warn(clippy::all,clippy::pedantic)]
-use bracket_lib::prelude::*;
-use serde::{Serialize,Deserialize};
-use serde_json::Result;
-use std::fs::{self};
 
-use std::path::Path;
-use std::ffi::OsStr;
+mod recipe;
+use crate::recipe::*;
+
+//use bracket_lib::prelude::*;
+
+
+
 
 fn main() {
     println!("Hello, world!");
+    let mut recipe = Recipe::default();
+    recipe.import("recipes/focaccia.json".to_string()).unwrap();
 }
