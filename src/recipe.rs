@@ -1,7 +1,7 @@
 #![warn(clippy::all,clippy::pedantic)]
 
 
-use serde_json::Result;
+//use serde_json::Result;
 use serde::{Serialize,Deserialize};
 
 use std::fs::{self};
@@ -21,19 +21,14 @@ pub struct Recipe {
 }
 
 impl Recipe {
-    pub fn import(&mut self,filename:String) -> Result<()> {
+    pub fn new(filename:String) -> Self {
         let contents:String=fs::read_to_string(filename).expect(
             "Expected file input");
-        let recipe:Recipe = serde_json::from_str(&contents)?;
+        let recipe:Recipe = serde_json::from_str(&contents).expect("Error in JSON file");
+        Self{
+            ..recipe
+        }
         
-        self.flour = recipe.flour;
-        self.hydration= recipe.hydration;
-        self.starter=recipe.starter;
-        self.salt=recipe.salt;
-        self.oil = recipe.oil;
-        self.name = recipe.name;
-        self.yeast=recipe.yeast;
-        Ok(())
     }
     pub fn water(&self) -> f32 {
         self.flour as f32 *(self.hydration as f32/100.0)
@@ -66,9 +61,9 @@ pub fn import_all_recipes(filepath:String,recipes:&mut Vec<Recipe>) {
     for path in paths {
         let name = path.unwrap().path().display().to_string();
         if check_is_json(&name) {
-            let mut recipe = Recipe::default();
-            recipe.import(name).unwrap();
-            recipes.push(recipe.clone());
+            
+            let recipe:Recipe = Recipe::new(name);
+            recipes.push(recipe);
         }
     }
 }

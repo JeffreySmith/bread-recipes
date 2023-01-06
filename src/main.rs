@@ -72,7 +72,8 @@ impl GameState for State {
             ctx.print_centered(line,&format!("{:.4}g of oil",self.recipes[self.index].oil().to_string()));
             line+=1;
         }
-        ctx.print_centered(line+5,"Press (N) for next, (P) for previous");
+        ctx.print_centered(line+5,"Press (N)next, (P)revious");
+        ctx.print_centered(line+6,"Or press left and right");
         
     }
 }
