@@ -25,9 +25,7 @@ impl Recipe {
         let contents:String=fs::read_to_string(filename).expect(
             "Expected file input");
         let recipe:Recipe = serde_json::from_str(&contents).expect("Error in JSON file");
-        Self{
-            ..recipe
-        }
+        recipe
         
     }
     pub fn water(&self) -> f32 {
